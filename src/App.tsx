@@ -1,14 +1,41 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 import ReservationBoard from './components/ReservationsDashboard/ReservationBoard'
 import Header from './components/Header/Header'
 import { Reservation } from './types/reservation'
 import reservationsData from './data/reservations.json'
 import { mapResponseObjectToReservation } from './utils/reservationUtils'
+import { BrowserRouter, Route, Routes } from 'react-router'
+import CreateReservation from './components/CreateReservation/CreateReservation'
+
+interface HomePageProps {
+  loading: boolean;
+  reservations: Reservation[];
+};
+
+const HomePage: React.FC<HomePageProps> = ({ loading, reservations }) => {
+  return (
+    <div className="app-container">
+      <Header />
+      <main className="main-content">
+        {loading ? (
+          <div className="loading">Ładowanie danych rezerwacji...</div>
+        ) : (
+          <ReservationBoard reservations={reservations} />
+        )}
+      </main>
+    </div>
+  );
+};
 
 function App() {
   const [reservations, setReservations] = useState<Reservation[]>([])
   const [loading, setLoading] = useState(true)
+
+  const reservedRooms = useMemo(() => {
+    const roomNumbers = reservations.map(reservation => reservation.roomNumber);
+    return new Set(roomNumbers);
+  }, [reservations]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -24,16 +51,12 @@ function App() {
   }, [])
 
   return (
-    <div className="app-container">
-      <Header />
-      <main className="main-content">
-        {loading ? (
-          <div className="loading">Ładowanie danych rezerwacji...</div>
-        ) : (
-          <ReservationBoard reservations={reservations} />
-        )}
-      </main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage loading={loading} reservations={reservations} />} />
+        <Route path="/add" element={<CreateReservation reservations={reservations} setReservations={setReservations} reservedRooms={reservedRooms} />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

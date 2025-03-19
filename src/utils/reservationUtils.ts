@@ -20,3 +20,5 @@ export const mapResponseObjectToReservation = (data: ReservationResponse): Reser
     email: data.email
   };
 }; 
+
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
