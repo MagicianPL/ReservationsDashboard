@@ -1,0 +1,112 @@
+.reservation-card {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reservation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-status-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.card-content {
+  padding: 0.7rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.guest-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.action-button {
+  margin-left: 0.3rem;
+}
+
+.btn-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-action:hover {
+  background-color: #f5f5f5;
+  color: #2c3e50;
+}
+
+.stay-dates {
+  margin-bottom: 0.5rem;
+}
+
+.date-range {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+  font-size: 0.8rem;
+}
+
+.date-label {
+  color: #7f8c8d;
+}
+
+.date-value {
+  font-weight: 500;
+  color: #34495e;
+}
+
+.room-number {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.room-label {
+  color: #7f8c8d;
+}
+
+.room-value {
+  font-weight: 500;
+  color: #34495e;
+  background-color: #ecf0f1;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.notes {
+  background-color: #f9f9f9;
+  padding: 0.4rem;
+  border-radius: 4px;
+  margin-top: 0.3rem;
+}
+
+.notes p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #7f8c8d;
+  font-style: italic;
+} 

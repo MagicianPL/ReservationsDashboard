@@ -1,0 +1,289 @@
+[
+  {
+    "id": "res-001",
+    "guestName": "Jan Kowalski",
+    "checkInDate": "2025-03-01",
+    "checkOutDate": "2025-03-05",
+    "status": "Checked Out",
+    "roomNumber": "101",
+    "email": "jan.kowalski@example.com"
+  },
+  {
+    "id": "res-002",
+    "guestName": "Anna Nowak",
+    "checkInDate": "2025-03-10",
+    "checkOutDate": "2025-03-17",
+    "status": "Due Out",
+    "roomNumber": "102",
+    "notes": "Pobyt biznesowy",
+    "email": "anna.nowak@example.com"
+  },
+  {
+    "id": "res-003",
+    "guestName": "Piotr Wiśniewski",
+    "checkInDate": "2025-03-15",
+    "checkOutDate": "2025-03-20",
+    "status": "In House",
+    "roomNumber": "201",
+    "notes": "Śniadania w cenie",
+    "email": "piotr.wisniewski@example.com"
+  },
+  {
+    "id": "res-004",
+    "guestName": "Magdalena Dąbrowska",
+    "checkInDate": "2025-03-16",
+    "checkOutDate": "2025-03-17",
+    "status": "Due Out",
+    "roomNumber": "202",
+    "email": "magdalena.dabrowska@example.com"
+  },
+  {
+    "id": "res-005",
+    "guestName": "Tomasz Lewandowski",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-21",
+    "status": "Due In",
+    "roomNumber": "301",
+    "notes": "Przyjazd po 18:00",
+    "email": "tomasz.lewandowski@example.com"
+  },
+  {
+    "id": "res-006",
+    "guestName": "Katarzyna Wójcik",
+    "checkInDate": "2025-03-20",
+    "checkOutDate": "2025-03-25",
+    "status": "Reserved",
+    "roomNumber": "101",
+    "email": "katarzyna.wojcik@example.com"
+  },
+  {
+    "id": "res-007",
+    "guestName": "Michał Kamiński",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-20",
+    "status": "No Show",
+    "roomNumber": "103",
+    "email": "michal.kaminski@example.com"
+  },
+  {
+    "id": "res-008",
+    "guestName": "Aleksandra Zielińska",
+    "checkInDate": "2025-03-22",
+    "checkOutDate": "2025-03-26",
+    "status": "Reserved",
+    "roomNumber": "104",
+    "notes": "Pobyt z psem",
+    "email": "aleksandra.zielinska@example.com"
+  },
+  {
+    "id": "res-009",
+    "guestName": "Krzysztof Szymański",
+    "checkInDate": "2025-03-15",
+    "checkOutDate": "2025-03-19",
+    "status": "In House",
+    "roomNumber": "203",
+    "email": "krzysztof.szymanski@example.com"
+  },
+  {
+    "id": "res-010",
+    "guestName": "Monika Woźniak",
+    "checkInDate": "2025-03-14",
+    "checkOutDate": "2025-03-17",
+    "status": "Due Out",
+    "roomNumber": "204",
+    "notes": "Śniadanie w cenie",
+    "email": "monika.wozniak@example.com"
+  },
+  {
+    "id": "res-011",
+    "guestName": "Grzegorz Duda",
+    "checkInDate": "2025-03-25",
+    "checkOutDate": "2025-03-30",
+    "status": "Reserved",
+    "roomNumber": "303",
+    "email": "grzegorz.duda@example.com"
+  },
+  {
+    "id": "res-012",
+    "guestName": "Joanna Mazur",
+    "checkInDate": "2025-03-05",
+    "checkOutDate": "2025-03-10",
+    "status": "Checked Out",
+    "roomNumber": "304",
+    "notes": "Pobyt rodzinny",
+    "email": "joanna.mazur@example.com"
+  },
+  {
+    "id": "res-013",
+    "guestName": "Marcin Kaczmarek",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-21",
+    "status": "Canceled",
+    "roomNumber": "101",
+    "notes": "Anulowano z powodu choroby",
+    "email": "marcin.kaczmarek@example.com"
+  },
+  {
+    "id": "res-014",
+    "guestName": "Barbara Pawlak",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-22",
+    "status": "Due In",
+    "roomNumber": "102",
+    "email": "barbara.pawlak@example.com"
+  },
+  {
+    "id": "res-015",
+    "guestName": "Robert Michalski",
+    "checkInDate": "2025-03-16",
+    "checkOutDate": "2025-03-17",
+    "status": "Due Out",
+    "roomNumber": "302",
+    "notes": "Parking podziemny",
+    "email": "robert.michalski@example.com"
+  },
+  {
+    "id": "res-016",
+    "guestName": "Ewa Nowakowska",
+    "checkInDate": "2025-03-24",
+    "checkOutDate": "2025-03-28",
+    "status": "Reserved",
+    "roomNumber": "202",
+    "notes": "Widok na morze",
+    "email": "ewa.nowakowska@example.com"
+  },
+  {
+    "id": "res-017",
+    "guestName": "Adam Sikora",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-20",
+    "status": "No Show",
+    "roomNumber": "301",
+    "email": "adam.sikora@example.com"
+  },
+  {
+    "id": "res-018",
+    "guestName": "Dorota Adamczyk",
+    "checkInDate": "2025-03-26",
+    "checkOutDate": "2025-03-30",
+    "status": "Reserved",
+    "roomNumber": "302",
+    "notes": "Późny przyjazd",
+    "email": "dorota.adamczyk@example.com"
+  },
+  {
+    "id": "res-019",
+    "guestName": "Paweł Górski",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-22",
+    "status": "Due In",
+    "roomNumber": "103",
+    "notes": "Pobyt biznesowy",
+    "email": "pawel.gorski@example.com"
+  },
+  {
+    "id": "res-020",
+    "guestName": "Maria Witkowska",
+    "checkInDate": "2025-03-29",
+    "checkOutDate": "2025-04-03",
+    "status": "Reserved",
+    "roomNumber": "104",
+    "email": "maria.witkowska@example.com"
+  },
+  {
+    "id": "res-021",
+    "guestName": "Kamil Walczak",
+    "checkInDate": "2025-03-15",
+    "checkOutDate": "2025-03-20",
+    "status": "In House",
+    "roomNumber": "304",
+    "notes": "All inclusive",
+    "email": "kamil.walczak@example.com"
+  },
+  {
+    "id": "res-022",
+    "guestName": "Agnieszka Baran",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-21",
+    "status": "Canceled",
+    "roomNumber": "203",
+    "notes": "Anulowano - zmiana planów",
+    "email": "agnieszka.baran@example.com"
+  },
+  {
+    "id": "res-023",
+    "guestName": "Marek Rutkowski",
+    "checkInDate": "2025-03-05",
+    "checkOutDate": "2025-03-12",
+    "status": "Checked Out",
+    "roomNumber": "204",
+    "notes": "Transport z lotniska",
+    "email": "marek.rutkowski@example.com"
+  },
+  {
+    "id": "res-024",
+    "guestName": "Karolina Jasińska",
+    "checkInDate": "2025-03-27",
+    "checkOutDate": "2025-04-01",
+    "status": "Reserved",
+    "roomNumber": "301",
+    "email": "karolina.jasinska@example.com"
+  },
+  {
+    "id": "res-025",
+    "guestName": "Łukasz Kwiatkowski",
+    "checkInDate": "2025-03-16",
+    "checkOutDate": "2025-03-17",
+    "status": "Due Out",
+    "roomNumber": "303",
+    "notes": "Późne wymeldowanie",
+    "email": "lukasz.kwiatkowski@example.com"
+  },
+  {
+    "id": "res-026",
+    "guestName": "Natalia Zawadzka",
+    "checkInDate": "2025-03-21",
+    "checkOutDate": "2025-03-25",
+    "status": "Reserved",
+    "roomNumber": "204",
+    "email": "natalia.zawadzka@example.com"
+  },
+  {
+    "id": "res-027",
+    "guestName": "Daniel Chmielewski",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-20",
+    "status": "No Show",
+    "roomNumber": "102",
+    "notes": "Nie pojawił się",
+    "email": "daniel.chmielewski@example.com"
+  },
+  {
+    "id": "res-028",
+    "guestName": "Weronika Sokołowska",
+    "checkInDate": "2025-03-30",
+    "checkOutDate": "2025-04-04",
+    "status": "Reserved",
+    "roomNumber": "201",
+    "email": "weronika.sokolowska@example.com"
+  },
+  {
+    "id": "res-029",
+    "guestName": "Jakub Zalewski",
+    "checkInDate": "2025-03-17",
+    "checkOutDate": "2025-03-21",
+    "status": "Canceled",
+    "roomNumber": "104",
+    "notes": "Anulowano - problemy rodzinne",
+    "email": "jakub.zalewski@example.com"
+  },
+  {
+    "id": "res-030",
+    "guestName": "Marta Sadowska",
+    "checkInDate": "2025-03-25",
+    "checkOutDate": "2025-03-29",
+    "status": "Reserved",
+    "roomNumber": "303",
+    "email": "marta.sadowska@example.com"
+  }
+] 
