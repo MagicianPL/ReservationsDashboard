@@ -2,6 +2,7 @@ import React from 'react';
 import './ReservationActionsModal.css';
 import Modal from '../../Modal/Modal';
 import { Reservation } from '../../../types/reservation';
+import { useNavigate } from 'react-router';
 
 interface ReservationActionsModalProps {
     onClose: () => void;
@@ -11,6 +12,8 @@ interface ReservationActionsModalProps {
 
 const ReservationActionsModal: React.FC<ReservationActionsModalProps> = ({ onClose, reservation, deleteReservation }) => {
     const [isSelectedForDeletion, setIsSelectedForDeletion] = React.useState(false);
+    const navigate = useNavigate();
+    const reservationIsEditable = reservation?.status === 'Reserved' || reservation?.status === 'Due In';
 
     const handleDeleteReservationClick = () => {
         if (isSelectedForDeletion) {
@@ -33,6 +36,12 @@ const ReservationActionsModal: React.FC<ReservationActionsModalProps> = ({ onClo
         }
     };
 
+    const handleEditButtonClick = () => {
+        if (reservation) {
+            navigate(`/edit/${reservation.id}`);
+        }
+    };
+
     if (!reservation) {
         return null;
     }
@@ -44,7 +53,7 @@ const ReservationActionsModal: React.FC<ReservationActionsModalProps> = ({ onClo
                 <p>Rezerwacja na: <span>{reservation.guestName}</span></p>
                 <p>Przyjazd: <span>{reservation.checkInDate}</span></p>
                 <p>Wyjazd: <span>{reservation.checkOutDate}</span></p>
-                {!isSelectedForDeletion && <button className="res-action-button">Edytuj</button>}
+                {!isSelectedForDeletion && reservationIsEditable && <button className="res-action-button" onClick={handleEditButtonClick}>Edytuj</button>}
                 {isSelectedForDeletion && <p className="delete-confirmation">Czy na pewno chcesz usunąć tę rezerwację?</p>}
                 <button className="res-action-button delete-button" onClick={handleDeleteReservationClick}>Usuń</button>
             </div>

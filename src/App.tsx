@@ -11,8 +11,8 @@ import CreateReservation from './components/CreateReservation/CreateReservation'
 interface HomePageProps {
   loading: boolean;
   reservations: Reservation[];
-  reservationsMap: ReservationsMap;
-  setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap>>;
+  reservationsMap: ReservationsMap | null;
+  setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap | null>>;
 };
 
 const HomePage: React.FC<HomePageProps> = ({ loading, reservations, reservationsMap, setReservationsMap }) => {
@@ -31,8 +31,8 @@ const HomePage: React.FC<HomePageProps> = ({ loading, reservations, reservations
 };
 
 function App() {
-  const [reservationsMap, setReservationsMap] = useState<ReservationsMap>({})
-  const reservations = useMemo(() => Object.values(reservationsMap), [reservationsMap])
+  const [reservationsMap, setReservationsMap] = useState<ReservationsMap | null>(null)
+  const reservations = useMemo(() => Object.values(reservationsMap || {}), [reservationsMap])
   const [loading, setLoading] = useState(true)
 
   const reservedRooms = useMemo(() => {
@@ -62,6 +62,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage loading={loading} reservations={reservations} reservationsMap={reservationsMap} setReservationsMap={setReservationsMap} />} />
         <Route path="/add" element={<CreateReservation reservations={reservations} setReservationsMap={setReservationsMap} reservedRooms={reservedRooms} />} />
+        <Route path="/edit/:reservationId" element={<CreateReservation reservations={reservations} setReservationsMap={setReservationsMap} reservedRooms={reservedRooms} reservationsMap={reservationsMap} />} />
       </Routes>
     </BrowserRouter>
   )

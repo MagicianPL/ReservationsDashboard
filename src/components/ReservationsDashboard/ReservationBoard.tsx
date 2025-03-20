@@ -3,14 +3,16 @@ import { Reservation, ReservationsMap, ReservationStatus } from '../../types/res
 import ReservationCard from './ReservationCard/ReservationCard';
 import './ReservationBoard.css';
 import ReservationActionsModal from './ReservationActionsModal/ReservationActionsModal';
+import { useNavigate } from 'react-router';
 
 interface ReservationBoardProps {
   reservations: Reservation[];
-  reservationsMap: ReservationsMap;
-  setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap>>;
+  reservationsMap: ReservationsMap | null;
+  setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap | null>>;
 }
 
 const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations, reservationsMap, setReservationsMap }) => {
+  const navigate = useNavigate();
 
   const groupedReservations = useMemo(() => {
     const groups: Record<ReservationStatus, Reservation[]> = {
@@ -64,7 +66,13 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations, reser
     closeActionsModal();
   };
 
+  const handleAddReservationClick = () => {
+    navigate('/add');
+  };
+
   return (
+    <>
+    <button className='add-reservation-button' onClick={handleAddReservationClick}>Dodaj rezerwację</button>
     <div className="reservation-board">
       {Object.entries(groupedReservations).map(([status, reservationList]) => (
           <div key={status} className="status-column">
@@ -92,6 +100,7 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations, reser
       ))}
      { actionModalIsVisible && <ReservationActionsModal onClose={closeActionsModal} reservation={reservationForActions.current} deleteReservation={handleDeleteReservation} /> }
     </div>
+    </>
   );
 };
 

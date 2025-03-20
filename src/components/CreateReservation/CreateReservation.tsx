@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Header from '../Header/Header';
 import '../../App.css';
 import './CreateReservation.css';
 import { getTodayDateForDateInput } from '../../utils/dateFormatters';
 import { Reservation, ReservationsMap } from '../../types/reservation';
 import { emailRegex } from '../../utils/reservationUtils';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 interface CreateReservationProps {
     reservations: Reservation[];
-    setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap>>;
+    setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap | null>>;
     reservedRooms: Set<string | undefined>;
+    reservationsMap?: ReservationsMap | null;
 }
 
-const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, setReservationsMap, reservedRooms }) => {
+const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, setReservationsMap, reservedRooms, reservationsMap }) => {
+    const { reservationId } = useParams();
+    const reservationToEdit = (reservationsMap && reservationId) ? reservationsMap[reservationId] : undefined;
+
     const [formState, setFormState] = React.useState({
         firstName: '',
         lastName: '',
@@ -25,6 +29,20 @@ const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, set
     });
     const [formError, setFormError] = React.useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (reservationToEdit) {
+            setFormState({
+                firstName: reservationToEdit.guestName.split(' ')[0] || '',
+                lastName: reservationToEdit.guestName.split(' ')[1] || '',
+                arrivalDate: reservationToEdit.checkInDate || '',
+                departureDate: reservationToEdit.checkOutDate || '',
+                roomNumber: reservationToEdit.roomNumber || '',
+                notes: reservationToEdit.notes || '',
+                email: reservationToEdit.email || '',
+            });
+        }
+    }, [reservationsMap]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -49,20 +67,20 @@ const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, set
             return;
         }
 
-        if (formState.roomNumber && reservedRooms.has(formState.roomNumber)) {
+        if (!reservationId && formState.roomNumber && reservedRooms.has(formState.roomNumber)) {
             setFormError('Pokój o podanym numerze jest już zarezerwowany.');
             return;
         }
 
-        // Create new reservation and set it to a state
+        // Create new or update existing reservation
         const status = getTodayDateForDateInput() === formState.arrivalDate ? 'Due In' : 'Reserved';
-        const newReservationId = `res-${reservations.length + 1}`;
+        const newReservationId = reservationId ? reservationId : `res-${reservations.length + 1}`;
         const newReservation: Reservation = {
             id: newReservationId,
             guestName: `${formState.firstName} ${formState.lastName}`,
             checkInDate: formState.arrivalDate,
             checkOutDate: formState.departureDate,
-            status,
+            status: reservationToEdit ? reservationToEdit.status : status,
             roomNumber: formState.roomNumber,
             notes: formState.notes,
             email: formState.email,
@@ -71,46 +89,76 @@ const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, set
         navigate('/');
     };
 
+    const navigateToDashboard = () => {
+        navigate('/');
+    };
+
+    const renderContent = useCallback(() => {
+        if (reservationId && !reservationsMap) {
+            return (
+                <p className='info'>Ładowanie danych rezerwacji...</p>
+            );
+        }
+
+        if (reservationId && reservationsMap && !reservationToEdit) {
+            return (
+                <>
+                    <p className='info form-error'>Nie znaleziono rezerwacji o id: {reservationId}</p>
+                    <button className='info-button' onClick={navigateToDashboard}>Wróć do Dashboardu</button>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <h1 className='page-title'>{`${reservationId ? 'Edytuj rezerwację' : 'Dodaj rezerwację'}`}</h1>
+                <form onSubmit={handleFormSubmit}>
+                    <div className='form-content'>
+                        <label>
+                            Imię*:
+                            <input type="text" className='form-input' name='firstName' value={formState.firstName} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Nazwisko*:
+                            <input type="text" className='form-input' name='lastName' value={formState.lastName} onChange={handleInputChange} />
+                        </label>
+                        {!reservationId && (
+                            <>
+                                <label>
+                                    Data przyjazdu*:
+                                    <input type="date" className='form-input' name='arrivalDate' value={formState.arrivalDate} onChange={handleInputChange} min={getTodayDateForDateInput()} />
+                                </label>
+                                <label>
+                                    Data wyjazdu*:
+                                    <input type="date" className='form-input' name='departureDate' value={formState.departureDate} onChange={handleInputChange} min={formState.arrivalDate || undefined} />
+                                </label>
+                                <label>
+                                    Numer pokoju:
+                                    <input type="number" className='form-input' name='roomNumber' value={formState.roomNumber} onChange={handleInputChange} />
+                                </label>
+                            </>
+                        )}
+                        <label>
+                            Notatka:
+                            <input type="text" className='form-input' name='notes' value={formState.notes} onChange={handleInputChange} />
+                        </label>
+                        <label>
+                            Adres e-mail:
+                            <input type="email" className='form-input' name='email' value={formState.email} onChange={handleInputChange} />
+                        </label>
+                        <p className='form-error'>{formError}</p>
+                        <button type="submit">{`${reservationId ? 'Zapisz' : 'Dodaj rezerwację'}`}</button>
+                    </div>
+                </form>
+            </>
+        );
+    }, [reservationId, reservationsMap, reservationToEdit, formState, formError]);
 
     return (
         <div className="app-container">
             <Header />
             <main className="main-content">
-                <h1 className='page-title'>Dodaj rezerwację</h1>
-                <form onSubmit={handleFormSubmit}>
-                    <div className='form-content'>
-                        <label>
-                            Imię*:
-                            <input type="text" className='form-input' name='firstName' value={formState.firstName} onChange={e => handleInputChange(e)} />
-                        </label>
-                        <label>
-                            Nazwisko*:
-                            <input type="text" className='form-input' name='lastName' value={formState.lastName} onChange={e => handleInputChange(e)} />
-                        </label>
-                        <label>
-                            Data przyjazdu*:
-                            <input type="date" className='form-input' name='arrivalDate' value={formState.arrivalDate} onChange={e => handleInputChange(e)} min={getTodayDateForDateInput()} />
-                        </label>
-                        <label>
-                            Data wyjazdu*:
-                            <input type="date" className='form-input' name='departureDate' value={formState.departureDate} onChange={e => handleInputChange(e)} min={formState.arrivalDate || undefined} />
-                        </label>
-                        <label>
-                            Numer pokoju:
-                            <input type="number" className='form-input' name='roomNumber' value={formState.roomNumber} onChange={e => handleInputChange(e)} />
-                        </label>
-                        <label>
-                            Notatka:
-                            <input type="text" className='form-input' name='notes' value={formState.notes} onChange={e => handleInputChange(e)} />
-                        </label>
-                        <label>
-                            Adres e-mail:
-                            <input type="email" className='form-input' name='email' value={formState.email} onChange={e => handleInputChange(e)} />
-                        </label>
-                        <p className='form-error'>{formError}</p>
-                        <button type="submit">Dodaj rezerwację</button>
-                    </div>
-                </form>
+                {renderContent()}
             </main>
         </div>
     );
