@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 import ReservationBoard from './components/ReservationsDashboard/ReservationBoard'
 import Header from './components/Header/Header'
-import { Reservation } from './types/reservation'
+import { Reservation, ReservationsMap } from './types/reservation'
 import reservationsData from './data/reservations.json'
 import { mapResponseObjectToReservation } from './utils/reservationUtils'
 import { BrowserRouter, Route, Routes } from 'react-router'
@@ -29,7 +29,8 @@ const HomePage: React.FC<HomePageProps> = ({ loading, reservations }) => {
 };
 
 function App() {
-  const [reservations, setReservations] = useState<Reservation[]>([])
+  const [reservationsMap, setReservationsMap] = useState<ReservationsMap>({})
+  const reservations = useMemo(() => Object.values(reservationsMap), [reservationsMap])
   const [loading, setLoading] = useState(true)
 
   const reservedRooms = useMemo(() => {
@@ -41,7 +42,11 @@ function App() {
     setTimeout(() => {
       try {
         const validReservations = reservationsData.map(mapResponseObjectToReservation);
-        setReservations(validReservations);
+        const reservationsMap = validReservations.reduce((acc, reservation) => {
+          acc[reservation.id] = reservation;
+          return acc;
+        }, {} as ReservationsMap);
+        setReservationsMap(reservationsMap);
       } catch (error) {
         console.error('Błąd podczas przetwarzania danych rezerwacji:', error);
       } finally {
@@ -54,7 +59,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage loading={loading} reservations={reservations} />} />
-        <Route path="/add" element={<CreateReservation reservations={reservations} setReservations={setReservations} reservedRooms={reservedRooms} />} />
+        <Route path="/add" element={<CreateReservation reservations={reservations} setReservationsMap={setReservationsMap} reservedRooms={reservedRooms} />} />
       </Routes>
     </BrowserRouter>
   )

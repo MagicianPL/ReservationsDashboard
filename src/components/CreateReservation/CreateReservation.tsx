@@ -3,17 +3,17 @@ import Header from '../Header/Header';
 import '../../App.css';
 import './CreateReservation.css';
 import { getTodayDateForDateInput } from '../../utils/dateFormatters';
-import { Reservation } from '../../types/reservation';
+import { Reservation, ReservationsMap } from '../../types/reservation';
 import { emailRegex } from '../../utils/reservationUtils';
 import { useNavigate } from 'react-router';
 
 interface CreateReservationProps {
     reservations: Reservation[];
-    setReservations: React.Dispatch<React.SetStateAction<Reservation[]>>;
+    setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap>>;
     reservedRooms: Set<string | undefined>;
 }
 
-const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, setReservations, reservedRooms }) => {
+const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, setReservationsMap, reservedRooms }) => {
     const [formState, setFormState] = React.useState({
         firstName: '',
         lastName: '',
@@ -56,8 +56,9 @@ const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, set
 
         // Create new reservation and set it to a state
         const status = getTodayDateForDateInput() === formState.arrivalDate ? 'Due In' : 'Reserved';
+        const newReservationId = `res-${reservations.length + 1}`;
         const newReservation: Reservation = {
-            id: `res-${reservations.length + 1}`,
+            id: newReservationId,
             guestName: `${formState.firstName} ${formState.lastName}`,
             checkInDate: formState.arrivalDate,
             checkOutDate: formState.departureDate,
@@ -66,7 +67,7 @@ const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, set
             notes: formState.notes,
             email: formState.email,
         };
-        setReservations(prevState => [...prevState, newReservation]);
+        setReservationsMap(prevState => ({ ...prevState, [newReservationId]: newReservation }));
         navigate('/');
     };
 

@@ -28,3 +28,7 @@ export interface ReservationResponse {
   notes?: string;
   email?: string;
 }
+
+export interface ReservationsMap {
+  [reservationId: string]: Reservation;
+}
