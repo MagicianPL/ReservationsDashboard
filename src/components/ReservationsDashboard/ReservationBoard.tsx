@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Reservation, ReservationStatus } from '../../types/reservation';
 import ReservationCard from './ReservationCard/ReservationCard';
 import './ReservationBoard.css';
+import ReservationActionsModal from './ReservationActionsModal/ReservationActionsModal';
 
 interface ReservationBoardProps {
   reservations: Reservation[];
@@ -37,6 +38,23 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations }) => 
     'No Show': '#c0392b'
   };
 
+  const [actionModalIsVisible, setActionModalIsVisible] = React.useState(false);
+  const reservationForActions = useRef<Reservation>(null);
+
+  const toggleActionsModal = (reservation: Reservation) => {
+    if (actionModalIsVisible) {
+      reservationForActions.current = null;
+    } else {
+      reservationForActions.current = reservation;
+    }
+    setActionModalIsVisible(prevState => !prevState);
+  };
+
+  const closeActionsModal = () => {
+    setActionModalIsVisible(false);
+    reservationForActions.current = null;
+  };
+
   return (
     <div className="reservation-board">
       {Object.entries(groupedReservations).map(([status, reservationList]) => (
@@ -54,6 +72,7 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations }) => 
                   key={reservation.id} 
                   reservation={reservation} 
                   statusColor={statusColors[reservation.status]}
+                  toggleActionsModal={toggleActionsModal}
                 />
               ))}
               {reservationList.length === 0 && (
@@ -62,6 +81,7 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations }) => 
             </div>
           </div>
       ))}
+     { actionModalIsVisible && <ReservationActionsModal onClose={closeActionsModal} reservation={reservationForActions.current} /> }
     </div>
   );
 };

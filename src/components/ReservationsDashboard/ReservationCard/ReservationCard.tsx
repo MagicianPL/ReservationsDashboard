@@ -6,9 +6,10 @@ import './ReservationCard.css';
 interface ReservationCardProps {
   reservation: Reservation;
   statusColor: string;
+  toggleActionsModal: (reservation: Reservation) => void;
 }
 
-const ReservationCard: React.FC<ReservationCardProps> = ({ reservation, statusColor }) => {
+const ReservationCard: React.FC<ReservationCardProps> = ({ reservation, statusColor, toggleActionsModal }) => {
   return (
     <div className="reservation-card">
       <div className="card-status-indicator" style={{ backgroundColor: statusColor }}></div>
@@ -16,7 +17,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({ reservation, statusCo
         <div className="card-header">
           <h3 className="guest-name">{reservation.guestName}</h3>
           <div className="action-button">
-            <button className="btn-action">
+            <button className="btn-action" onClick={() => toggleActionsModal(reservation)}>
               ⋮
             </button>
           </div>
