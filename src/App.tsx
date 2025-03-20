@@ -11,9 +11,11 @@ import CreateReservation from './components/CreateReservation/CreateReservation'
 interface HomePageProps {
   loading: boolean;
   reservations: Reservation[];
+  reservationsMap: ReservationsMap;
+  setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap>>;
 };
 
-const HomePage: React.FC<HomePageProps> = ({ loading, reservations }) => {
+const HomePage: React.FC<HomePageProps> = ({ loading, reservations, reservationsMap, setReservationsMap }) => {
   return (
     <div className="app-container">
       <Header />
@@ -21,7 +23,7 @@ const HomePage: React.FC<HomePageProps> = ({ loading, reservations }) => {
         {loading ? (
           <div className="loading">Ładowanie danych rezerwacji...</div>
         ) : (
-          <ReservationBoard reservations={reservations} />
+          <ReservationBoard reservations={reservations} reservationsMap={reservationsMap} setReservationsMap={setReservationsMap} />
         )}
       </main>
     </div>
@@ -58,7 +60,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage loading={loading} reservations={reservations} />} />
+        <Route path="/" element={<HomePage loading={loading} reservations={reservations} reservationsMap={reservationsMap} setReservationsMap={setReservationsMap} />} />
         <Route path="/add" element={<CreateReservation reservations={reservations} setReservationsMap={setReservationsMap} reservedRooms={reservedRooms} />} />
       </Routes>
     </BrowserRouter>

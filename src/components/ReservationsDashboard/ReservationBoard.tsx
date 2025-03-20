@@ -1,14 +1,16 @@
 import React, { useMemo, useRef } from 'react';
-import { Reservation, ReservationStatus } from '../../types/reservation';
+import { Reservation, ReservationsMap, ReservationStatus } from '../../types/reservation';
 import ReservationCard from './ReservationCard/ReservationCard';
 import './ReservationBoard.css';
 import ReservationActionsModal from './ReservationActionsModal/ReservationActionsModal';
 
 interface ReservationBoardProps {
   reservations: Reservation[];
+  reservationsMap: ReservationsMap;
+  setReservationsMap: React.Dispatch<React.SetStateAction<ReservationsMap>>;
 }
 
-const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations }) => {
+const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations, reservationsMap, setReservationsMap }) => {
 
   const groupedReservations = useMemo(() => {
     const groups: Record<ReservationStatus, Reservation[]> = {
@@ -55,6 +57,13 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations }) => 
     reservationForActions.current = null;
   };
 
+  const handleDeleteReservation = (reservationId: string) => {
+    const updatedReservationsMap = { ...reservationsMap };
+    delete updatedReservationsMap[reservationId];
+    setReservationsMap(updatedReservationsMap);
+    closeActionsModal();
+  };
+
   return (
     <div className="reservation-board">
       {Object.entries(groupedReservations).map(([status, reservationList]) => (
@@ -81,7 +90,7 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations }) => 
             </div>
           </div>
       ))}
-     { actionModalIsVisible && <ReservationActionsModal onClose={closeActionsModal} reservation={reservationForActions.current} /> }
+     { actionModalIsVisible && <ReservationActionsModal onClose={closeActionsModal} reservation={reservationForActions.current} deleteReservation={handleDeleteReservation} /> }
     </div>
   );
 };

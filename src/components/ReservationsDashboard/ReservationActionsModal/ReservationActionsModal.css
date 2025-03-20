@@ -21,3 +21,7 @@ p span {
 .delete-button {
     background-color: red;
 }
+
+.delete-confirmation {
+    color: red;
+}
