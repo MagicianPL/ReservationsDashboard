@@ -51,4 +51,4 @@ const ReservationCard: React.FC<ReservationCardProps> = ({ reservation, statusCo
   );
 };
 
-export default ReservationCard; 
+export default React.memo(ReservationCard); 
