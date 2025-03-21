@@ -17,6 +17,7 @@ interface CreateReservationProps {
 const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, setReservationsMap, reservedRooms, reservationsMap }) => {
     const { reservationId } = useParams();
     const reservationToEdit = (reservationsMap && reservationId) ? reservationsMap[reservationId] : undefined;
+    const reservationIsEditable = reservationToEdit?.status === 'Reserved' || reservationToEdit?.status === 'Due In';
 
     const [formState, setFormState] = React.useState({
         firstName: '',
@@ -108,6 +109,15 @@ const CreateReservation: React.FC<CreateReservationProps> = ({ reservations, set
                 </>
             );
         }
+
+        if (reservationId && reservationsMap && reservationToEdit && !reservationIsEditable) {
+            return (
+                <>
+                    <p className='info form-error'>Z powodu statusu rezerwacji nie możesz jej edytować.</p>
+                    <button className='info-button' onClick={navigateToDashboard}>Wróć do Dashboardu</button>
+                </>
+            );
+        };
 
         return (
             <>
