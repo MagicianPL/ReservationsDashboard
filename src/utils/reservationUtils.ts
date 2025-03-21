@@ -22,3 +22,20 @@ export const mapResponseObjectToReservation = (data: ReservationResponse): Reser
 }; 
 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export const getReservationStatusesForChange = (currentStatus: ReservationStatus | undefined): ReservationStatus[] => {
+  switch (currentStatus) {
+    case 'Reserved':
+      return ['Canceled', 'Due In'];
+    case 'Due In':
+      return ['Canceled', 'No Show', 'In House'];
+    case 'In House':
+      return ['Checked Out'];
+      case 'Checked Out':
+        return ['In House'];
+    case 'Canceled':
+      return ['Reserved'];
+    default:
+      return [];
+  }
+}

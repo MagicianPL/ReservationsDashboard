@@ -98,7 +98,7 @@ const ReservationBoard: React.FC<ReservationBoardProps> = ({ reservations, reser
             </div>
           </div>
       ))}
-     { actionModalIsVisible && <ReservationActionsModal onClose={closeActionsModal} reservation={reservationForActions.current} deleteReservation={handleDeleteReservation} /> }
+     { actionModalIsVisible && <ReservationActionsModal onClose={closeActionsModal} reservation={reservationForActions.current} deleteReservation={handleDeleteReservation} reservationsMap={reservationsMap} setReservationsMap={setReservationsMap} /> }
     </div>
     </>
   );
